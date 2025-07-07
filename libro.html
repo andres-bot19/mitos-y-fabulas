@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mitos y Fábulas 10º</title>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+/* Variables CSS (tomadas de tu código original para consistencia) */
+:root {
+--primary-color: #b71c1c; /* Deep Red */
+--secondary-color: #3f51b5; /* Indigo */
+--accent-color: #3498db; /* Bright Blue */
+--text-color: #333;
+--background-color: #f4f1ea; /* Light Beige */
+--card-background: #ffffff;
+--shadow-color: rgba(0, 0, 0, 0.1);
+--border-radius: 15px;
+}
+body {
+margin: 0;
+padding: 0;
+font-family: 'Merriweather', serif;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+line-height: 1.6;
+color: var(--text-color);
+overflow-y: auto;
+overflow-x: hidden;
+background: var(--background-color);
+}
+/* Estilos para la Portada */
+#portada {
+display: flex;
+flex-direction: column;
+align-items: center;
+min-height: 100vh;
+background: var(--background-color);
+color: var(--text-color);
+text-align: center;
+padding: 20px;
+box-sizing: border-box;
+animation: fadeIn 1.5s ease-out;
+padding-top: 10vh;
+padding-bottom: 120px;
+}
+#portada-top {
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 5px;
+margin-bottom: 30px;
+}
+#portada-title-ie {
+font-size: 2.2em;
+color: var(--primary-color);
+margin: 0;
+font-weight: 700;
+}
+#portada-subtitle {
+font-size: 1.8em;
+color: var(--secondary-color);
+margin: 0;
+font-weight: 700;
+}
+#portada-image-wrapper {
+width: 80%;
+max-width: 400px;
+height: auto;
+display: flex;
+justify-content: center;
+align-items: center;
+margin: 30px 0;
+}
+#portada-image-wrapper img {
+max-width: 100%;
+height: auto;
+display: block;
+box-shadow: 0 4px 15px var(--shadow-color);
+border-radius: 8px;
+}
+#portada-bottom {
+width: 100%;
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 0 20px;
+box-sizing: border-box;
+margin-top: 50px;
+}
+#portada-info {
+font-size: 1.1em;
+line-height: 1.4;
+margin-bottom: 20px;
+text-align: center;
+color: var(--text-color);
+max-width: 300px;
+margin-left: auto;
+margin-right: auto;
+}
+#siguienteBtn {
+background-color: var(--primary-color);
+color: white;
+border: none;
+padding: 15px 30px;
+font-size: 1.2em;
+border-radius: 10px;
+cursor: pointer;
+transition: background-color 0.3s ease, transform 0.2s ease;
+box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+position: fixed;
+right: 40px;
+bottom: 40px;
+z-index: 1000;
+}
+#siguienteBtn:hover {
+background-color: #8b1515;
+transform: translateY(-2px);
+}
+@keyframes fadeIn {
+from { opacity: 0; }
+to { opacity: 1; }
+}
+/* New fade-out animation for portada */
+@keyframes fadeOut {
+from { opacity: 1; }
+to { opacity: 0; }
+}
+.fade-out {
+animation: fadeOut 0.5s ease-out forwards;
+}
+
+/* Styles for the main content container (table of contents and story display) */
+.main-app-container {
+max-width: 96%;
+margin: 20px auto;
+background: var(--card-background);
+padding: 25px;
+border-radius: var(--border-radius);
+box-shadow: 0 6px 20px var(--shadow-color);
+min-height: 400px;
+display: none; /* Initially hidden */
+flex-direction: column;
+}
+h1 {
+text-align: center;
+color: var(--primary-color);
+font-size: 2.2em;
+margin-bottom: 30px;
+font-weight: 700;
+}
+h2 {
+font-size: 1.5em;
+color: var(--secondary-color);
+margin-top: 25px;
+margin-bottom: 15px;
+text-align: center;
+}
+#main-menu {
+display: block;
+padding: 10px 0;
+}
+.menu-section {
+margin-bottom: 25px;
+}
+.menu-section h2 {
+border-bottom: 2px solid var(--secondary-color);
+padding-bottom: 8px;
+margin-bottom: 20px;
+}
+#main-menu a {
+display: block;
+background-color: var(--accent-color);
+padding: 15px 20px;
+margin: 10px auto;
+text-align: center;
+color: white;
+font-weight: bold;
+font-size: 1.1em;
+text-decoration: none;
+border-radius: 10px;
+max-width: 450px;
+transition: background-color 0.3s ease, transform 0.2s ease;
+box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+#main-menu a:hover {
+background-color: #1a237e;
+transform: translateY(-2px);
+}
+/* --- CONTENT DISPLAY IMPROVEMENTS --- */
+#content-display {
+display: none;
+flex-direction: column;
+flex-grow: 1;
+padding: 15px;
+border: 1px solid #eee;
+border-radius: 10px;
+background-color: #fcfcfc;
+box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+overflow-y: auto;
+}
+#content-display h2 {
+text-align: center;
+font-size: 1.8em;
+color: #1a237e;
+text-transform: uppercase;
+margin-bottom: 25px;
+padding-bottom: 10px;
+border-bottom: 2px solid #1a237e;
+}
+#story-text {
+white-space: pre-wrap;
+border-radius: 10px;
+padding: 0;
+overflow-y: visible;
+box-sizing: border-box;
+line-height: 1.8;
+font-size: 1.05em;
+text-align: justify;
+margin-bottom: 20px;
+}
+button.back-button {
+margin-top: 30px;
+background: var(--primary-color);
+color: white;
+border: none;
+padding: 12px 25px;
+border-radius: 8px;
+cursor: pointer;
+font-size: 1.1em;
+transition: background-color 0.3s ease, transform 0.2s ease;
+display: block;
+margin-left: auto;
+margin-right: auto;
+max-width: 200px;
+width: 100%;
+box-sizing: border-box;
+}
+button.back-button:hover {
+background: #8b1515;
+transform: translateY(-1px);
+}
+/* Media Queries para responsividad */
+@media (max-width: 768px) {
+#portada {
+padding-top: 8vh;
+padding-bottom: 100px;
+}
+#portada-top {
+margin-bottom: 20px;
+}
+#portada-title-ie {
+font-size: 1.8em;
+}
+#portada-subtitle {
+font-size: 1.4em;
+}
+#portada-image-wrapper {
+max-width: 300px;
+margin: 20px 0;
+}
+#portada-info {
+font-size: 1em;
+margin-bottom: 15px;
+}
+#siguienteBtn {
+padding: 12px 25px;
+font-size: 1.1em;
+right: 20px;
+bottom: 20px;
+}
+.main-app-container {
+margin: 15px auto;
+padding: 15px;
+max-width: 98%;
+}
+h1 {
+font-size: 1.8em;
+}
+h2 {
+font-size: 1.3em;
+}
+#main-menu a {
+font-size: 1em;
+padding: 12px 15px;
+}
+#content-display h2 {
+font-size: 1.6em;
+}
+#story-text {
+padding: 0;
+font-size: 1em;
+}
+button.back-button {
+font-size: 1em;
+padding: 10px 20px;
+max-width: 180px;
+}
+}
+@media (max-width: 480px) {
+#portada {
+padding-top: 5vh;
+padding-bottom: 80px;
+}
+#portada-top {
+margin-bottom: 15px;
+}
+#portada-title-ie {
+font-size: 1.5em;
+}
+#portada-subtitle {
+font-size: 1.2em;
+}
+#portada-image-wrapper {
+max-width: 250px;
+margin: 15px 0;
+}
+#portada-info {
+font-size: 0.9em;
+margin-bottom: 10px;
+}
+#siguienteBtn {
+padding: 10px 20px;
+font-size: 1em;
+right: 15px;
+bottom: 15px;
+}
+.main-app-container {
+margin: 10px auto;
+padding: 10px;
+border-radius: 10px;
+}
+h1 {
+font-size: 1.6em;
+}
+h2 {
+font-size: 1.2em;
+}
+#main-menu a {
+font-size: 0.95em;
+padding: 10px 12px;
+border-radius: 8px;
+}
+#content-display h2 {
+font-size: 1.4em;
+}
+#story-text {
+font-size: 0.95em;
+line-height: 1.7;
+}
+button.back-button {
+font-size: 0.95em;
+padding: 8px 15px;
+border-radius: 6px;
+max-width: 150px;
+}
+}
+</style>
+</head>
+<body>
+<div id="portada">
+<div id="portada-top">
+<h1 id="portada-title-ie">I.E San Agustín</h1>
+<p id="portada-subtitle">Fábulas y Mitos</p>
+</div>
+<div id="portada-image-wrapper">
+<img src="imagenes/mitosyfabulas-Photoroom.png" alt="Imagen Representativa de Mitos y Fábulas">
+</div>
+<div id="portada-bottom">
+<p id="portada-info">Grado: 10º A<br>Área: Lenguaje<br>Año: 2025</p>
+</div>
+</div>
+<button id="siguienteBtn">Siguiente</button>
+
+<div class="main-app-container">
+<div id="main-menu">
+<h1>Mitos y Fábulas 10º</h1>
+<div class="menu-section">
+<h2>Selecciona un Mito:</h2>
+<div class="list-group">
+<a data-story-key="mito1">Mito 1: EL BUFEO ENAMORADO</a>
+<a data-story-key="mito2">Mito 2: MITO DEL DUENDE ROBANIÑOS DEL PUTUMAYO</a>
+</div>
+</div>
+<div class="menu-section">
+<h2>Selecciona una Fábula:</h2>
+<div class="list-group">
+<a data-story-key="fabula1">Fábula 1: LA GUACAMAYA Y EL TIGRILLO</a>
+<a data-story-key="fabula2">Fábula 2: EL VALOR DE ESCUCHAR</a>
+<a data-story-key="fabula3">Fábula 3: LA BOA Y LA NUTRIA</a>
+<a data-story-key="fabula4">Fábula 4: DONDE EL ORO NO ALIMENTA</a>
+<a data-story-key="fabula5">Fábula 5: LA NUTRIA DEL PUTUMAYO Y EL ORO DEL RIO</a>
+<a data-story-key="fabula6">Fábula 6: LA ARDILLA APURADA Y EL PEREZOSO SABIO</a>
+<a data-story-key="fabula7">Fábula 7: PLUMAS AJENAS</a>
+<a data-story-key="fabula8">Fábula 8: EL CAIMAN NEGRO Y EL ORO ESCONDIDO</a>
+<a data-story-key="fabula9">Fábula 9: LA RANA DE CRISTAL Y EL RIO PUTUMAYO</a>
+<a data-story-key="fabula10">Fábula 10: EL GUACAMAYO DEL PUTUMAYO</a>
+<a data-story-key="fabula11">Fábula 11: EL ARMADILLO Y LA RANA AMBICIOSA</a>
+<a data-story-key="fabula12">Fábula 12: EL COLIBRI Y EL ARBOL DE LA VIDA</a>
+</div>
+</div>
+</div>
+<div id="content-display">
+<h2 id="story-title"></h2>
+<div id="story-text"></div>
+<button class="back-button">← Volver</button>
+</div>
+</div>
+
+<script>
+const storyData = {
+mito1: {
+title: "Mito 1:EL BUFEO ENAMORADO",
+text: `‎Otra leyenda que encanta a las leguízameñas tiene que ver con el conocido Bufeo o Delfín enamorado.
+En este relato de Wilmer San Juan Velásquez, el gestor cultural precisa que las mujeres que han tenido la oportunidad de mirarlo han quedado extasiadas por su particular belleza.
+Es un personaje bohemio y por eso Wilmer asegura que el Bufeo aprovecha la noche para tomar la figura de un corpulento y apuesto hombre de piel trigueña, cabello negro y liso.
+Asegura que lo han visto salir de las aguas del rio Putumayo, caminando por las solitarias calles de Puerto Leguízamo y que en sus andanzas llega hasta los bares y discotecas en donde las mujeres caen rendidas a sus pies.
+Por su estatura, rasgos indígenas y corpulencia, subraya que quienes lo han visto lo asemejan con Tarzán.
+Cuenta la leyenda que su misteriosa aparición suele suceder a la media noche y que su presencia en los establecimientos públicos nocturnos es efímera, es decir que una vez a conquistado el mayor número de mujeres, a las 5:30 de la madrugada¸ el misterioso personaje abandona esos lugares y emprende su camino al río Putumayo en donde una vez lo cubren las aguas recupera su figura habitual.
+Cuando vuelve a ser bufeo o delfín rosado, la mayor parte del día descansa cerca al Caucayá o frente a un gigantesco árbol de Ceiba, el cual aún es considerado el árbol de la vida y de la sabiduría
+Autor: Edwin Medina `
+},
+mito2: {
+title: "Mito 2: MITO DEL DUENDE ROBANIÑOS DEL PUTUMAYO",
+text: `En lo profundo del Putumayo, donde la selva canta con el viento y los árboles murmuran historias antiguas, vivía una familia en una humilde casa de madera, al borde del monte.
+Lucía y Manuel tenían tres hijos, pero era el menor, Tomás, quien más curiosidad mostraba por los secretos del bosque.
+Desde pequeño, Tomás había escuchado las historias de los mayores: relatos de luces que bailaban en la oscuridad, de árboles que cambiaban de lugar, y de duendes —criaturas pequeñas, escurridizas y juguetonas— que robaban niños para llevarlos a sus escondites en la selva.
+Pero como todo niño, Tomás pensaba que no eran más que cuentos para asustarlo.
+Una tarde, mientras su madre lavaba ropa en el río y su padre trabajaba en el cultivo de yuca, Tomás salió a jugar cerca del lindero del monte.
+Escuchó una risa aguda, como el chillido de un pájaro burlón, y entre los matorrales vio a un hombrecito vestido con hojas secas, de ojos vivaces y sombrero grande.
+—¿Quieres jugar conmigo? —dijo el duende con una voz extrañamente amable.
+Tomás, sorprendido pero sin miedo, asintió. Lo siguió entre los árboles, y pronto estuvo tan adentro en la selva que ya no supo cómo regresar.
+El duende lo llevó a un claro secreto, donde los árboles formaban un techo natural y las flores parecían respirar.
+Allí jugaron con piedras que flotaban y animales que hablaban en susurros.
+Mientras tanto, en casa, Lucía notó la ausencia de su hijo.
+El sol comenzó a esconderse, y el miedo se apoderó de la familia. Vecinos llegaron con linternas, machetes y oraciones.
+Sabían lo que estaba pasando. “El duende se lo llevó”, murmuró una anciana.
+Al amanecer del tercer día, la desesperación llevó a Lucía a buscar al taita Isidro, un sabedor indígena con poder sobre los espíritus del monte.
+El viejo preparó un ritual con sahumerios, cantos en lengua ancestral, y hojas de yagé. Durante la ceremonia, dijo:
+—El niño está vivo, pero bajo el encantamiento. El duende lo tiene por juego, no por maldad.
+Pero si no se rompe el lazo, no recordará su hogar jamás.
+Esa noche, colocaron una cruz de palo frente a la casa, amarraron una cinta roja al árbol donde Tomás jugaba, y dejaron una taza de chocolate caliente —el favorito del niño— junto al fuego.
+Justo antes del amanecer, Tomás apareció caminando solo por el camino.
+Tenía los pies descalzos, el cabello enmarañado y una sonrisa adormecida. No lloraba. No parecía triste. Solo decía:
+—Jugamos con luces... y me contaban chistes raros.
+Durante semanas no hablaba más. Luego, lentamente, fue volviendo a sí mismo. Pero nunca volvió a acercarse al monte.
+Desde entonces, en esa vereda del Putumayo, se repite la advertencia: “A los niños no se les deja solos al borde del bosque, porque el duende aún juega entre los árboles, buscando nuevos amigos que se hayan olvidado de obedecer.”
+Autor: Adan Gomez
+Fuente: mito popular indigena y campesinos sobre los duendes, pueblos como Kofan, Inga, Siona, Kamentza`
+},
+fabula1: {
+title: "Fábula 1: LA GUACAMAYA Y EL TIGRILLO",
+text: `En lo alto de un árbol frondoso, vivía Guma, una guacamaya de brillantes colores, conocida por su canto alegre y por ser muy vanidosa.
+Abajo, en la espesura del bosque, vivía Rogelio, un tigrillo sigiloso, que rara vez hablaba, pero observaba todo con atención.
+Un día, Guma escuchó que unos humanos se acercaban al bosque.
+Inquieta, voló a lo más alto y gritó a todos los animales: ¡Debemos escondernos! ¡Los humanos vienen a atraparnos!
+Pero cuando vio que todos huían hacia lo profundo de la selva, pensó: ¿Y si en vez de huir, me quedo?
+Soy tan hermosa que seguro querrán admirarme, no hacerme daño.
+Rogelio, que la oyó, le dijo con voz baja: La belleza no te protege, amiga. La selva sí.
+Pero Guma no lo escuchó. Se quedó quieta en su árbol, mostrando sus plumas al sol.
+Al poco tiempo, unos cazadores la vieron, la atraparon y la metieron en una jaula.
+Mientras era llevada lejos, Guma lloró: Debí escuchar al tigrillo…
+Moraleja:
+La vanidad ciega al sabio consejo; quien no escucha, aprende por el dolor.
+Autor: Daniel López
+Grado: 10*A.`
+},
+fabula2: {
+title: "Fábula 2: EL VALOR DE ESCUCHAR",
+text: `En la selva misteriosa y colorida de la amazonia, donde los árboles se alzan como
+torres verdes y el canto de las hermosas aves resuenan entre las hojas, vivía un
+astuto ocelote llamado Oliver y un guacamayo llamado Bruno. Era una época en
+que los animales estaban en competencia unos a otros, tratando de demostrar
+quién era el más fuerte o el más inteligente.
+Oliver, con su piel manchada y su cabeza pequeña, considerado un cazador
+inteligente, incluyendo la paciencia que tiene. Por otro lado Bruno el guacamayo
+era conocido por sus plumas coloridas y su capacidad de imitar sonidos y su pico
+fuerte. Aunque ambos eran amigos, Oliver a menudo menospreciaba a Bruno por
+no ser tan hábil e inteligente como el.
+Un día, mientras andaban juntos, Oliver escuchó rumores sobre un nuevo grupo de
+animales que habían llegado a la selva. Estos animales eran conocidos por ser muy
+fuertes y temidos por todos. Oliver, lleno de vanidad, decidió que debía demostrar
+su valentía hacia ellos, solo. “No necesito tu ayuda, Bruno”, le dijo. “Soy el mejor
+cazador aquí”.
+Bruno, preocupado por la seguridad de su amigo, le advirtió :”Oliver, no subestimes
+a esos animales. La fuerza no es siempre lo más importante”. Pero Oliver
+simplemente lo ignoro. Al llegar al territorio de los nuevos animales,
+inmediatamente Oliver se dio cuenta que no podía con todos. En medio del
+enfrentamiento, Oliver fue acorralado y se sintió atrapado.
+En ese momento, Bruno decidió hacer algo por su amigo. Con su vuelo ágil y su
+canto glamuroso, distrajo a los animales, permitiendo que Oliver escapara. Al final
+ambos regresaron a su hogar, riéndose de lo que había sucedido, Oliver se dio
+cuenta que había subestimado no solo a Bruno si no también el valor de la
+colaboración. Aprendió que la verdadera fuerza viene en la amistad y en el
+reconocer las habitaciones de los demás.
+Desde ese día, Oliver dejó otras la ignorancia de solo confiar y creer que el puede
+solo.
+Moraleja: “No subestimes a los demás, cada persona tiene un valor único”.
+Autor: Danna Ordoñez.`
+},
+fabula3: {
+title: "Fábula 3: La Boa y la Nutria",
+text: `En un recodo tranquilo del río Amazonas bajo la sombra de los grandes ceibos y entre los reflejos dorados del agua vivía una Boa Constrictora vieja y astuta Ocultándose entre los troncos y las ramas pasaba los días acechando en silencio segura de su fuerza y de su posición como depredadora temida por todos
+No muy lejos de allí una Nutria Gigante joven y valiente nadaba junto a su familia Siempre alerta con el corazón lleno de energía la nutria defendía a los suyos con fiereza, aunque a veces su voz era más ruidosa que necesaria
+Las demás criaturas del río la miraban con respeto, pero también con recelo La nutria habla mucho y provoca a quien no debe decían algunos peces Y aunque la nutria lo sabía no podía evitar burlarse de aquellos que se creían mas que los demás
+Un día la joven nutria se burló de la Boa creyéndose más valiente por estar acompañada de su grupo La serpiente silenciosa pero astuta decidió darle una lección Cuando la nutria se acercó demasiado la Boa la atrapó rápidamente Las otras nutrias huyeron y la joven quedó indefensa Entonces una vieja tortuga intervino recordándoles a ambas que ni la arrogancia ni la fuerza ciega son sabias Ante sus palabras la Boa soltó a la nutria y ambas aprendieron la lección
+Autor: Jeiner Baltan.`
+},
+fabula4: {
+title: "Fábula 4: DONDE EL ORO NO ALIMENTA",
+text: `En lo más profundo de la selva amazónica, vivía el Jaguar Dorado, soberano indiscutible del territorio.
+Su pelaje brillante como el sol, era temido y respetado.
+Cada luna nueva, organizaba un gran banquete para celebrar su reinado, al que solo podían asistir los animales más cercanos a su poder: el Águila Real, el Caimán Negro y la Anaconda.
+Todos ellos compartían el lujo, la comida abundante y las decisiones del bosque.
+Mientras tanto, en los rincones oscuros de la selva, el resto de los animales —el Armadillo, el Mono Churuco, la Rana de Cristal y el Perezoso, sobrevivían con lo poco que encontraban, observaban desde la distancia cómo los poderosos se empachaban mientras ellos luchaban por una fruta caída o un poco de agua limpia.
+Un día, llegó una gran sequía, el río se secó y los árboles dejaron de dar fruto, el Jaguar Dorado, preocupado por su banquete mensual, reunió a sus consejeros.
+Y les dijo:
+¡Debemos mantener el festín, cueste lo que cueste!, ordenó con un rugido, así que el Águila y la Anaconda recorrieron la selva exigiendo tributos a los animales pobres: frutos, agua recolectada en hojas, hasta huevos de sus propias crías.
+¡Es por el honor del Jaguar!, gritaban. “Si él cae, todo el orden de la selva caerá con él”.
+El Armadillo se negó. El Mono Churuco se escondió, la Rana de Cristal lloró en silencio, y el Perezoso, cansado, solo suspiró, entonces, el Jaguar ordenó que todo aquel que no obedeciera sería desterrado del bosque.
+Pero la selva, sabia y antigua, comenzó a hablar entre las hojas, una noche, los animales se reunieron en secreto.
+Decidieron dejar de servir al Jaguar. No entregarían más frutos ni alimentos, preferían enfrentar la sequía juntos que seguir alimentando un poder que los consumía.
+Sin tributos, el banquete no pudo celebrarse. El Jaguar, enojado, salió a cazar… pero sus presas ya no estaban.
+La selva entera se había unido en silencio.
+Días después, el Jaguar Dorado, flaco y solo, caminaba sin rumbo. El brillo de su pelaje se había opacado.
+Nadie le temía ya. Había perdido su poder porque olvidó que incluso los reyes necesitan del pueblo para sostener su trono.
+Moraleja:
+Cuando el poder olvida al pueblo, el pueblo aprende a vivir sin su opresor.
+Autora: María de los Ángeles Luna Sánchez
+Grado: 10 A.`
+},
+fabula5: {
+title: "Fábula 5: LA NUTRIA DEL PUTUMAYO Y EL ORO DEL RIO",
+text: `Por: Thomas Quiroz – Grado 10°
+Narrador: tercera persona
+Tiempo: hace muchos años
+Espacio: río Putumayo, selva colombiana
+La Nutria del Putumayo y el Oro del Río
+Por: Thomas Quiroz – Grado 10-A
+Allá por los tiempos idos, metida en la espesura del Putumayo, habitaba una nutria de nombre Nacari.
+Era la más veloz y con una curiosidad sin par.
+Le encantaba el agua pura del río, jugar con sus compañeros y la calma de la selva.
+Cada mañana, Nacari mostraba a las nutrias jóvenes cómo moverse entre las piedras y hallar comida sin exponerse.
+Cierto día, husmeando un sitio nunca antes visto, halló algo brillante al fondo del río.
+Era una pepita de oro, que reflejaba la luz del sol de manera singular.
+Nacari jamás había visto algo así de bello. Llevó la pepita a la orilla y llamó a sus amigos para hacerla ver.
+El viejo loro, que moraba en un árbol cercano, vio el oro y dijo con voz seria: “Nacari, eso es oro puro. Los humanos lo anhelan mucho porque creen que vale mucho. Pero, ojo, que el oro puede traer problemas, no solo alegría. ”
+Meollo
+Desde ese día, Nacari mutó. Su curiosidad por el oro aumentó y empezó a buscar más, dejando de lado lo que antes gozaba.
+Ya no jugaba con sus amigos ni cuidaba el río.
+“Si encuentro mucho oro, seré la nutria más importante de toda la selva”, pensaba.
+Entre tanto, la noticia del oro se regó. Los humanos, seducidos por el brillo del río, llegaron con máquinas grandes y ruidosas.
+Empezaron a cavar y a sacar oro del río, dañando las orillas y enturbiando el agua cristalina.
+Los peces empezaron a fenecer y los animales huyeron.
+Una noche, la nutria Nacari se acercó a un grupo de animales y les dijo: “No teman, este oro será para nuestro provecho. Pronto seremos ricos y poderosos. ” Pero el mono sabio respondió: “Nacari, la riqueza no vale la ruina de nuestro hogar. Si el río se va, nosotros también. ”
+Nacari, cegada por su ambición, hizo caso omiso del consejo. Siguió buscando oro hasta quedar sola.
+No se percató de que el río moría, y con él, su familia y amigos.
+Con el tiempo, los humanos partieron pues no había oro para sacar.
+El río estaba turbio, sin vida, y la selva parecía triste y desolada.
+Nacari, rendida y apenada, miró el oro que había guardado.
+Ahí entendió que ese tesoro no se medía con la vida que perdió.
+Con remordimiento, se retiró pausadamente del sitio, cargando con la culpa de su equivocación.
+Comprendió que la avaricia es capaz de arruinar aquello que más valoras, y que preservar el medio ambiente es preservar la existencia.
+Lección:
+La ambición descontrolada es capaz de arrasar no solo con el entorno, sino también con las personas que lo anhelan.
+Análisis:
+Esta historia ofrece una reprobación hacia la ambición del hombre y la explotación sin control de los bienes naturales.
+Nos hace ver que el deseo desmedido puede acarrear ruina y que es crucial estimar y defender nuestro entorno y sociedad..`
+},
+fabula6: {
+title: "Fábula 6: LA ARDILLA APURADA Y EL PEREZOSO SABIO",
+text: `En un frondoso bosque tropical, lleno de árboles altos y ríos cristalinos, vivía una ardilla llamada Tika.
+Era ágil, veloz y siempre estaba de un lado para otro recolectando frutos, construyendo nidos, gritando órdenes
+y preocupándose por todo. Decía estar "aprovechando el tiempo", pero nunca se detenía a mirar las flores o a
+escuchar los cantos de los tucanes. Siempre decía:
+- ¡El que se detiene, pierde!
+En ese mismo bosque vivía un perezoso llamado Nando. Pasaba los días colgado de las ramas, moviéndose con una
+lentitud desesperante para los demás. Mientras Tika hacía diez cosas en una mañana, Nando
+apenas había bajado
+una rama. Algunos animales lo respetaban, otros se burlaban de él.
+Tika, en especial, no perdía oportunidad de hacerle comentarios sarcásticos:
+- ¡Mira Nando! ¡Espero que no estés yendo a una emergencia! -decía riendo mientras trepaba por
+las ramas como un rayo.
+Nando solo respondía con una sonrisa calmada:
+- Cada cosa a su tiempo, Tika.
+Un día, el cielo cambió de tono. Un viento extraño comenzó a soplar, y los animales presintieron
+que algo no andaba bien.
+Los pájaros emigraban más temprano de lo normal, y los insectos se escondían bajo tierra.
+Tika, sin detenerse, seguía recolectando frutos y construyendo un segundo nido, "por si acaso". No
+escuchaba a nadie.
+En su prisa por prever todo, se burló de los avisos de otros animales.
+- ¡El clima cambia siempre! ¡No hay por qué alarmarse!
+Pero esa noche, una tormenta como nunca antes se había visto azotó el bosque. Los árboles se
+doblaron por los vientos.
+La lluvia caía como si el cielo se rompiera. Tika, en su apuro por haber hecho todo sola y rápido,
+tenía nidos mal
+construidos que se vinieron abajo.
+En medio del caos, vio cómo Nando, con su calma habitual, había construido un refugio pequeño
+pero firme entre dos
+árboles grandes. Lo había hecho con ramas resistentes y hojas gruesas, con tiempo y cuidado.
+Al ver a Tika empapada, tiritando y sin hogar, Nando le ofreció refugio sin decir una palabra de
+reproche.
+Al día siguiente, el bosque amaneció devastado. Tika estaba cansada, más de lo emocional que de
+lo físico.
+Por primera vez en mucho tiempo, se quedó en silencio.
+- Gracias, Nando -murmuró-. Pensé que vivir deprisa me haría más fuerte, pero solo me hizo
+descuidar lo importante.
+Nando la miró con paciencia y respondió:
+- El bosque no corre. La vida no es una carrera, sino un camino que se debe caminar con atención.
+Desde entonces, Tika siguió siendo activa, pero aprendió a detenerse a escuchar, a mirar, y a
+construir con calma.
+La velocidad ya no era su única virtud.
+MORALEJA:
+"Quien vive corriendo puede tropezar con lo esencial; la paciencia y la calma también construyen
+con sabiduría."
+Narrador: Omnisciente
+Tiempo: Un pasado reciente
+Espacio: Un bosque tropical del Putumayo
+Autora: Sofía Núñez
+Curso: 10A.`
+},
+fabula7: {
+title: "Fábula 7: PLUMAS AJENAS",
+text: `En un bosque lleno de vida y colores, vivía un pájaro llamado Ollero, conocido por su canto suave y por construir los nidos más elaborados entre las ramas.
+A pesar de su talento, Ollero no se sentía feliz, pues cada vez que veía al Pavo Real pasearse con su cola deslumbrante, un fuego de envidia se encendía en su pecho.
+‎-De que sirve cantar bien y construir nidos hermosos si todos admiran a ese Pavo Real vanidoso ?
+- se quejaba Ollero a los demás animales.
+‎
+‎
+‎Un día, Ollero decidió que ya era hora de brillar como el Pavo Real.
+Robo plumas caídas del pavo y se las pego en la cola con barro.
+Luego salió a pasearse entre los demás, sacudiendo su improvisada cola.
+‎Al principio, algunos animales lo admiraron sorprendidos, pero al acercarse, vieron que las plumas estaban mal colocadas y que el barro se caía.
+Las ardillas comenzaban a reír, los conejos susurraban, y hasta el buho nego con la cabeza.
+‎El Pavo Real, que lo observaba desde una roca, se acercó con calma.
+‎- Ollero, nadie puede ser admirado por imitar a otros.
+Eres único por lo que haces, no por como luces - le dijo con serenidad
+‎
+‎
+‎Avergonzado, Ollero se quito las plumas falsas y volvió a su árbol.
+Esa noche, canto una melodía tan dulce que incluso el Pavo Real se detuvo a escuchar.
+Los animales, en silencio, lo aplaudieron con sus miradas y sonrisas.
+‎Desde entonces, Ollero ya no envidio las plumas ajenas. Entendió que cada criatura brilla a su manera, y que no hay belleza más valiosa que la que nace de uno mismo.
+‎
+‎Moraleja: La envidia oscurece tu valor.
+‎Aprecia tus dones, pues cada quien tiene una luz única para ofrecer.
+‎
+‎Autora: Damaris Imbajoa.`
+},
+fabula8: {
+title: "Fábula 8: EL CAIMAN NEGRO Y EL ORO ESCONDIDO",
+text: `Narrador: Omnisciente
+Tiempo: Tiempo mítico, similar al presente
+Espacio: Lagunas oscuras del Putumayo profundo
+Inicio
+En las aguas profundas y misteriosas del Putumayo, donde los árboles parecen tocar el cielo y las noches se llenan de sonidos ancestrales, vivía un caimán negro llamado Ñawi.
+Era temido y respetado por todos. De mirada intensa y cuerpo gigante, Ñawi no solo era fuerte, sino también muy astuto.
+Sin embargo, su corazón estaba lleno de ambición.
+Ñawi no se conformaba con tener el dominio del río; él quería riquezas.
+Había escuchado leyendas humanas sobre un tesoro escondido en las profundidades de la selva: oro enterrado por los antiguos.
+Desde entonces, se obsesionó con encontrarlo.
+Pasaba los días recorriendo el río, removiendo el fondo lodoso con su cola, vigilando a los humanos, robando objetos brillantes de los campamentos ilegales.
+Su guarida se llenó de metales, pulseras rotas y monedas oxidadas. Pero nada le bastaba. Quería más.
+Nudo
+Un día, Ñawi descubrió un campamento minero clandestino. Desde la sombra, vio cómo los humanos sacaban grandes cantidades de tierra con máquinas y las lavaban con químicos.
+El oro aparecía, pero a un gran costo: los peces morían, las aves huían y el agua se volvía espesa, venenosa.
+Ñawi no se preocupó por eso. Al contrario, pensó que podía aprovechar la situación.
+Comenzó a vigilar el lugar y cada noche, arrastrándose entre los arbustos, robaba pedazos de oro que los humanos dejaban caer.
+Rápidamente se convirtió en una leyenda entre los animales: el caimán que acumulaba oro como los humanos.
+Pero la avaricia tiene un precio. Un día, su laguna empezó a secarse.
+El agua tenía un sabor extraño, sus presas se alejaron y su piel comenzó a agrietarse.
+Ñawi no lo entendía: “¡Tengo más oro que nadie! ¿Por qué sufro?”
+Fue entonces cuando la vieja anaconda, conocida como Abuela Sisa, emergió de la espesura.
+—El oro no alimenta, Ñawi —susurró—. Te cegaste como los hombres.
+Mientras cavabas para encontrar brillo, perdiste el agua que te daba la vida.
+Ñawi rugió, pero en el fondo sabía que era verdad.
+Sus ojos, antes brillantes por la codicia, se llenaron de una sombra de arrepentimiento.
+Desenlace
+Intentó devolver el oro al río, enterrar las joyas robadas y limpiar su laguna. Pero el daño era grande.
+El veneno que los humanos habían dejado seguía fluyendo. Ñawi entendió que su codicia lo había hecho cómplice de un crimen contra su propio hogar.
+Con el tiempo, se alejó, buscando otras aguas limpias donde empezar de nuevo.
+Algunos dicen que lo vieron en un rincón remoto del río Putumayo, enseñando a los jóvenes caimanes sobre los peligros del oro humano.
+Desde entonces, cuando alguien encuentra una pieza de oro en la selva y siente un escalofrío, dicen que es Ñawi observando, recordando lo que perdió por querer brillar más que el sol.
+Moraleja:
+Quien se deja cegar por la codicia, acaba mordiendo la mano que lo alimenta.
+La riqueza sin equilibrio destruye incluso al más poderoso.`
+},
+fabula9: {
+title: "Fábula 9: LA RANA DE CRISTAL Y EL RIO PUTUMAYO",
+text: `En la grande selva del Putumayo, donde los árboles abrazan el cielo y las aves cantan melodías suaves, vivía una rana llamada Mariela, conocida porque cantaba muy hermoso.
+Tanto que alegraba a todos los animales de la selva, pero había un problema.
+Ella pensaba que su canto no lo valoraban, y que lo valorarían más si salía de la selva
+Así que decidió salir de su hogar y aventurarse por el rio Putumayo para que todos los animales disfruten de su canto.
+A medida que avanzaba Mariela, conoció a un pez que se llamaba Pipo, que le dijo: “Mariela, tu canto es hermoso. ¿Por qué no te quedas aquí en el río?”.
+Mariela respondió: “Quiero que el mundo escuche mi canto, no solo ustedes”.
+Y siguió rio abajo Luego encontro una tortuga qué se llamaba Morrocoi, quien le dijo: “la fama no siempre trae la felicidad. A veces, lo mas valioso es compartir tu talento con quien de verdad lo aprecian”
+Así que Mariela decidió quedarse en el río y cantar con los animales. Al final, todos disfrutaron de su canto.
+Moraleja: No busques la felicidad y admiración de personas a quienes no le importas;
+lo importante es cantar y disfrutar con quienes sí lo hacen
+Autor: Iles`
+},
+fabula10: {
+title: "Fábula 10: EL GUACAMAYO DEL PUTUMAYO",
+text: `Institución Educativa Comercial San Agustín. Grado:10-A
+Área: Lenguaje
+Autora: Sara Isabel Palma
+Espacio:
+La selva amazónica del Putumayo, Colombia.
+Inicio:
+En lo profundo de la selva del Putumayo, vivía un guacamayo de brillantes colores llamado Arco.
+Era el ave más llamativa de todo el bosque: sus plumas parecían pintadas por el arcoíris, y su canto era tan fuerte que despertaba hasta al más perezoso de los monos.
+Arco era admirado por todos los animales. Sin embargo, con el tiempo, comenzó a sentirse más importante que los demás.
+Ya no jugaba con los tucanes, ni se bañaba en el río con las garzas.
+Se pasaba el día mirándose en el reflejo del agua y burlándose de quienes no eran tan coloridos como él.—“¡Miren ese oso perezoso, tan gris y aburrido! ¿Por qué no nacieron tan bellos como yo?”— decía con arrogancia.
+Los demás animales estaban cansados de su actitud, pero ninguno se atrevía a enfrentarlo.
+Nudo:
+Un día, llegaron al bosque unos humanos con grandes herramientas, cámaras y drones.
+Eran turistas que buscaban capturar la belleza del Putumayo. Al ver a Arco, se quedaron maravillados.
+“¡Es perfecto para una foto de portada!”, gritó uno de ellos. Arco, orgulloso, comenzó a posar.
+Extendía las alas, giraba la cabeza y hasta imitaba voces humanas. Pero lo que parecía un juego, no lo era.
+Esa misma noche, mientras dormía, lo capturaron y lo metieron en una jaula.
+Cuando despertó, ya no estaba en el bosque, sino en una jaula dentro de una casa en la ciudad.
+Todo era gris, ruidoso y triste. Lo alimentaban con semillas secas y lo obligaban a repetir palabras para grabarlo y subirlo a internet.
+Ya no volaba, ya no cantaba por gusto… ahora solo era una atracción.
+Desde su jaula, Arco recordaba los días en los que se burlaba de los demás.
+Entendió que su belleza lo había vuelto prisionero, y que su orgullo lo había dejado solo.
+Nadie vino a rescatarlo, porque él nunca había cuidado de nadie.
+Desenlace:
+Pasaron los meses y el brillo de sus plumas comenzó a desvanecerse.
+El guacamayo del Putumayo, antes tan admirado, ahora era una sombra de lo que fue.
+Un día, un grupo de defensores de animales lo rescató y lo llevó de vuelta al bosque.
+Cuando volvió, ya no se sentía superior. Se acercó con humildad a los demás animales y les pidió perdón.
+Ahora Arco era diferente: ayudaba a los más pequeños a buscar alimento, contaba historias a los más viejos, y ya no se miraba en el río, sino que escuchaba a los demás.
+Desde entonces, Arco fue querido de verdad. No por sus plumas, sino por su corazón.
+Moraleja:
+La belleza sin humildad puede convertirse en una jaula. Lo que realmente te hace valioso es cómo tratas a los demás.
+Crítica:
+Esta fábula critica el orgullo, la vanidad y el deseo humano de explotar la naturaleza por interés propio.
+También denuncia cómo la apariencia puede ser sobrevalorada, olvidando valores esenciales como la empatía y la solidaridad.`
+},
+fabula11: {
+title: "Fábula 11: EL ARMADILLO Y LA RANA AMBICIOSA",
+text: `Hace mucho tiempo, en los exuberantes bosques del Putumayo, cuando los humanos aún no habían despejado los árboles ni contaminaban los arroyos, numerosas criaturas coexistían pacíficamente y en armonía.
+Entre ellos, destacaban dos vecinos Don Armadillo un trabajador incansable que cuidaba su madriguera con esmero, y Doña Rana, una parlanchina que deseaba todo fácilmente.
+Don Armadillo pasó sus días reuniendo frutas, ordenando su vivienda y ayudando a otras criaturas. Siempre decía:
+- "Quien siembra hoy, cosecha mañana".
+Doña Rana, por otro lado, estaba sentada en su hoja favorita del río Putumayo, mirando las disposiciones del Armadillo.
+- "¿Por qué no puedo conseguir tanto sin trabajar tanto?" Se quejó. "Seguro que el armadillo oculta algo ...".
+Un día, Doña Rana visitó la casa del Armadillo y habló en un tono suave
+- "Vecino, ¿puedo pedir prestado algunas de tu yuca y frutas? Los recibiré mañana y los devolveré".
+El armadillo, gentil, bienvenido. Pero pasaron los días y la rana nunca cumplió su palabra.
+En lugar de reunirse, se quedó dormido y conversó con los pájaros.
+Cuando llegó el período húmedo y la falta de comida, el agujero del armadillo estaba completamente abastecido, mientras que Doña Rana no necesitaba comer.
+En necesidad urgente, ella buscó asistencia una vez más.
+Esta vez, Don Armadillo cerró la entrada de su casa y dijo
+Debes actuar. "-" No puedes simplemente existir con palabras, doña rana.
+Necesitas hacer algo ". El arroyo entrega peces, pero no los atrapan solos.
+La rana, sintiéndose avergonzada, se dio cuenta de que sus celos y su pereza le habían causado perder las comidas.
+Y a pesar de que había pasado el tiempo habitual, descubrió que el trabajo duro siempre produce resultados.
+Autor: Sarita Mora`
+},
+fabula12: {
+title: "Fábula 12: EL COLIBRI Y EL ARBOL DE LA VIDA",
+text: `Una tarde nublosa en la selva del Putumayo, un colibrí llamado Teo encontró un majestuoso Árbol de la Vida.
+El árbol le dijo que cada hoja representaba un sueño no cumplido en la selva y que, si ayudaba a cumplir uno, traería alegría a todos.
+Teo decidió ayudar a varios animales: una tortuga que quería ver el mar, un mono que deseaba tocar música y una rana que anhelaba ser valiente.
+Con su apoyo, cada uno logró dar pasos hacia sus sueños.
+Al final, Teo regresó al árbol, quien le explicó que al ayudar a otros, había creado un mundo lleno de felicidad.
+*Moraleja:* La verdadera felicidad se encuentra en ayudar a otros a alcanzar sus sueños y metas.
+Autor: Samuel Enriquez`
+},
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+const portada = document.getElementById('portada');
+const siguienteBtn = document.getElementById('siguienteBtn');
+const mainAppContainer = document.querySelector('.main-app-container');
+
+const mainMenu = document.getElementById('main-menu');
+const contentDisplay = document.getElementById('content-display');
+const storyTitle = document.getElementById('story-title');
+const storyText = document.getElementById('story-text');
+const backButton = document.querySelector('.back-button');
+
+siguienteBtn.addEventListener('click', () => {
+portada.classList.add('fade-out');
+portada.addEventListener('animationend', () => {
+portada.style.display = 'none';
+siguienteBtn.style.display = 'none';
+mainAppContainer.style.display = 'flex';
+}, { once: true });
+});
+
+mainMenu.addEventListener('click', (event) => {
+const target = event.target;
+if (target.tagName === 'A' && target.hasAttribute('data-story-key')) {
+const key = target.getAttribute('data-story-key');
+displayStory(key);
+}
+});
+
+backButton.addEventListener('click', goBackToMenu);
+
+function displayStory(key) {
+const section = storyData[key];
+if (section) {
+storyTitle.textContent = section.title;
+storyText.textContent = section.text;
+mainMenu.style.display = 'none';
+contentDisplay.style.display = 'flex';
+contentDisplay.scrollTop = 0;
+}
+}
+
+function goBackToMenu() {
+contentDisplay.style.display = 'none';
+mainMenu.style.display = 'block';
+}
+});
+</script>
+</body>
+</html>
